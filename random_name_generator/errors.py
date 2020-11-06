@@ -1,0 +1,2 @@
+class NameGenerationError(Exception):
+    pass
