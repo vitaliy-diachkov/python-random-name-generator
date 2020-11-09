@@ -58,13 +58,7 @@ def generate_one(
     descent: Descent = Descent.ENGLISH,
     sex: Sex = Sex.UNISEX
 ) -> str:
-    first_names = get_first_names(descent, sex)
-    first_name = pick_random_name(first_names)
-
-    last_names = get_last_names(descent, sex)
-    last_name = pick_random_name(last_names)
-
-    return f'{first_name} {last_name}'
+    return generate(descent, sex, limit=1)[0]
 
 
 def generate(
@@ -73,16 +67,34 @@ def generate(
     *,
     limit: int
 ) -> List[str]:
+
+    first_names = get_first_names(descent, sex)
+    last_names = get_last_names(descent, sex)
+
+    possible_combinations = len(first_names) * len(last_names)
+
+    if possible_combinations < limit:
+        raise NameGenerationError(
+            f'We can not generate more then {possible_combinations} {sex} '
+            f'names for {descent} descent'
+        )
+
     result = []
 
     for _ in range(limit):
-        name = generate_one(descent, sex)
+        name = __generate_one(first_names, last_names)
 
         while name in result:
-            name = generate_one(descent, sex)
+            name = __generate_one(first_names, last_names)
 
         result.append(name)
     return result
+
+
+def __generate_one(first_names, last_names):
+    first_name = pick_random_name(first_names)
+    last_name = pick_random_name(last_names)
+    return f'{first_name} {last_name}'
 
 
 def get_sexes(initial: Sex) -> List[Sex]:

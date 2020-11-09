@@ -172,6 +172,10 @@ class TestFullNameGenerator:
         names = generate(Descent.ENGLISH, Sex.MALE, limit=6)
         assert not any(names.count(name) > 1 for name in names)
 
+    def test_generate_names_too_big_limit(mock_first_names, mock_last_names):
+        with pytest.raises(NameGenerationError):
+            generate(Descent.ENGLISH, Sex.MALE, limit=7)
+
 
 @pytest.mark.parametrize(
     'test_input,expected',
