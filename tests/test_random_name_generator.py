@@ -23,8 +23,6 @@ def mock_random_picker(monkeypatch):
         random_picker_mock
     )
 
-    return random_picker_mock
-
 
 @pytest.fixture
 def mock_first_names(monkeypatch):
