@@ -1,2 +1,2 @@
 class NameGenerationError(Exception):
-    pass
+    """Raised when we are not able to generate names."""

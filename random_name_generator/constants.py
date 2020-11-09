@@ -2,8 +2,11 @@ from enum import Enum
 
 
 class Descent(Enum):
-    ENGLISH = 'english'
-    ITALIAN = 'italian'
+    ENGLISH = 'English'
+    ITALIAN = 'Italian'
+    FRENCH = 'French'
+    GERMAN = 'German'
+    RUSSIAN = 'Russian'
 
 
 class Sex(Enum):
@@ -35,6 +38,24 @@ FIRST_NAMES = {
         ],
         Sex.UNISEX: [
             'Cosme'
+        ]
+    }
+}
+
+
+LAST_NAMES = {
+    Descent.ENGLISH: [
+        'Abramson',
+        'Johnson'
+    ],
+    Descent.RUSSIAN: {
+        Sex.MALE: [
+            'Ivanov',
+            'Petrov'
+        ],
+        Sex.FEMALE: [
+            'Ivanova',
+            'Petrova'
         ]
     }
 }
