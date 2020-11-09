@@ -37,6 +37,10 @@ def mock_first_names(monkeypatch):
     }
 
     monkeypatch.setattr(
+        'random_name_generator.selectors.FIRST_NAMES',
+        first_names
+    )
+    monkeypatch.setattr(
         'random_name_generator.constants.FIRST_NAMES',
         first_names
     )
@@ -51,6 +55,9 @@ def mock_last_names(monkeypatch):
             'Abramson',
             'Johnson'
         ],
+        Descent.ITALIAN: [
+            'Gotti'
+        ],
         Descent.RUSSIAN: {
             Sex.MALE: [
                 'Ivanov',
@@ -64,8 +71,14 @@ def mock_last_names(monkeypatch):
     }
 
     monkeypatch.setattr(
+        'random_name_generator.selectors.LAST_NAMES',
+        last_names
+    )
+    monkeypatch.setattr(
         'random_name_generator.constants.LAST_NAMES',
         last_names
     )
+
+
 
     return last_names

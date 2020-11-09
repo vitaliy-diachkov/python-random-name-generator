@@ -1,25 +1,35 @@
 import random
+from typing import Union
 
 from .constants import Descent, Sex
 from .errors import NameGenerationError
 from .selectors import get_first_names, get_last_names
 
 
+DescentPair = tuple[Descent, Descent]
+
+
 def generate(
-    descent: Descent = Descent.ENGLISH,
+    descent: Union[Descent, DescentPair] = Descent.ENGLISH,
     sex: Sex = Sex.UNISEX,
     *,
-    limit: int
+    limit: int,
 ) -> list[str]:
-    first_names = get_first_names(descent, sex)
-    last_names = get_last_names(descent, sex)
+    if isinstance(descent, Descent):
+        first_name_descent, last_name_descent = descent, descent
+    if isinstance(descent, tuple):
+        first_name_descent, last_name_descent = descent
+
+    first_names = get_first_names(first_name_descent, sex)
+    last_names = get_last_names(last_name_descent, sex)
 
     max_random_names = min(len(first_names), len(last_names))
 
     if max_random_names < limit:
         raise NameGenerationError(
-            f'We can not generate {limit} {sex} {descent} '
-            f'names (max. possible count: {max_random_names})'
+            f'We can not generate {limit} {sex} {first_name_descent}/'
+            f'{last_name_descent} names (max. possible count: '
+            f'{max_random_names}).'
         )
 
     random.shuffle(first_names)
@@ -35,8 +45,8 @@ def generate(
 
 
 def generate_one(
-    descent: Descent = Descent.ENGLISH,
-    sex: Sex = Sex.UNISEX
+    descent: Union[Descent, DescentPair] = Descent.ENGLISH,
+    sex: Sex = Sex.UNISEX,
 ):
     names = generate(descent, sex, limit=1)
     return names[0]

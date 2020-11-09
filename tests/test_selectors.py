@@ -36,7 +36,7 @@ class TestFirstNameSelector:
             mock_first_names
     ):
         with pytest.raises(NameGenerationError):
-            get_first_names(descent, Sex)
+            get_first_names(descent, sex)
 
 
 class TestLastNameSelector:
