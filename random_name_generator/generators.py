@@ -1,43 +1,42 @@
-from typing import List
+import random
 
-from . import utils
-from .errors import NameGenerationError
 from .constants import Descent, Sex
+from .errors import NameGenerationError
+from .selectors import get_first_names, get_last_names
 
 
-class NameGenerator:
-    def __init__(self, descent: Descent, sex: Sex):
-        self._descent = descent
-        self._sex = sex
+def generate(
+    descent: Descent = Descent.ENGLISH,
+    sex: Sex = Sex.UNISEX,
+    *,
+    limit: int
+) -> list[str]:
+    first_names = get_first_names(descent, sex)
+    last_names = get_last_names(descent, sex)
 
-    def generate(self, limit: int) -> List[str]:
-        first_names = utils.get_first_names(self._descent, self._sex)
-        last_names = utils.get_last_names(self._descent, self._sex)
+    max_random_names = min(len(first_names), len(last_names))
 
-        possible_combinations = len(first_names) * len(last_names)
+    if max_random_names < limit:
+        raise NameGenerationError(
+            f'We can not generate {limit} {sex} {descent} '
+            f'names (max. possible count: {max_random_names})'
+        )
 
-        if possible_combinations < limit:
-            raise NameGenerationError(
-                f'We can not generate more then {possible_combinations} '
-                f'{self._sex} names for {self._descent} descent'
-            )
+    random.shuffle(first_names)
+    random.shuffle(last_names)
 
-        result = []
+    name_pairs = list(zip(first_names, last_names))[:limit]
 
-        for _ in range(limit):
-            name = self._generate_one(first_names, last_names)
+    return [
+        f'{first_name} {last_name}'
+        for first_name, last_name
+        in name_pairs
+    ]
 
-            while name in result:
-                name = self._generate_one(first_names, last_names)
 
-            result.append(name)
-        return result
-
-    def _generate_one(
-        self,
-        first_names: List[str],
-        last_names: List[str]
-    ) -> str:
-        first_name = utils.pick_random_name(first_names)
-        last_name = utils.pick_random_name(last_names)
-        return f'{first_name} {last_name}'
+def generate_one(
+    descent: Descent = Descent.ENGLISH,
+    sex: Sex = Sex.UNISEX
+):
+    names = generate(descent, sex, limit=1)
+    return names[0]
