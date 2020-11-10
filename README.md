@@ -2,29 +2,33 @@
 
 Library for Python to generate a list of random names. Supports multi-ethnical generation.
 
-## Run
+## Installation
 
-To run this on Linux (tested on Ubuntu 20.04):
+The package can be simple installed via pip: `pip install python-random-name-generator`.
 
-```bash
-# Clone git repository to your local machine
-git clone git@gitlab.com:vitaliy-diachkov/python-random-name-generator.git
 
-# Go to project root directory
-cd python-random-name-generator
+## Usage
 
-# Create a virtual environment for python. Requires `virtualenv` and `python3.9`
-# to be installed.
-virtualenv -p python3.9 venv
+Here are listed some examples of `python-random-name-generator` usege.
 
-# Actiavte virtual environment
-source venv/bin/activate
+### Python
 
-# Install project depedencies (required only for development)
-pip install -r requirements.txt
+```python
+import random_name_generator as rng
+
+# Generate 2 english male names
+rng.generate(descent=rng.Descent.ENGLISH, sex=rng.Sex.MALE, limit=2)
+
+# Generate 1 italian female name
+rng.generate_one(rng.Descent.ITALIAN, sex=rng.Sex.FEMALE)
+
+# Generate 1 male name with english first name and italian last name.
+rng.generate_one(
+    descent=(rng.Descent.ENGLISH, rng.Descent.ITALIAN),
+    sex=rng.Sex.MALE
+)
 ```
 
-## Test
+### CLI
 
-To run unit tests execute `python -m pytest`.
-
+*TDB*
