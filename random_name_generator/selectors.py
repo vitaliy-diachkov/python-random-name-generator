@@ -1,5 +1,11 @@
+"""
+Name selectors module.
+
+Selectors are functions that selects appropriate list of names (first/last
+names) for certain sex and descent.
+"""
 from itertools import chain
-from typing import Optional
+from typing import List, Optional
 
 from .errors import UnsupportedDescentError, UnsupportedSexError
 from .constants import Descent, Sex, FIRST_NAMES, LAST_NAMES
@@ -8,7 +14,15 @@ from .constants import Descent, Sex, FIRST_NAMES, LAST_NAMES
 def get_first_names(
     descent: Descent = Descent.ENGLISH,
     sex: Sex = Sex.UNISEX
-) -> list[str]:
+) -> List[str]:
+    """
+    Get list of first names of given descent and matching given sex.
+
+    :param descent: Ethnic origin of first name.
+    :param sex: Sex affiliation of first name.
+
+    :returns: List of first names.
+    """
     names_by_descent = FIRST_NAMES.get(descent)
 
     if not names_by_descent:
@@ -33,7 +47,15 @@ def get_first_names(
 def get_last_names(
     descent: Descent = Descent.ENGLISH,
     sex: Optional[Sex] = None
-) -> list[str]:
+) -> List[str]:
+    """
+    Get list of last names of given descent and matching given sex.
+
+    :param descent: Ethnic origin of last name.
+    :param sex: Sex affiliation of last name.
+
+    :returns: List of first names.
+    """
     last_names = LAST_NAMES.get(descent)
 
     if isinstance(last_names, dict):
@@ -58,7 +80,13 @@ def get_last_names(
     return last_names
 
 
-def get_sexes(initial: Sex) -> list[Sex]:
+def get_sexes(initial: Sex) -> List[Sex]:
+    """
+    Determines name sex affiliation that can match given sex.
+
+    For example, unisex names can also match male and female requests, so they
+    should be included into response.
+    """
     if initial in [Sex.MALE, Sex.FEMALE]:
         return [initial, Sex.UNISEX]
     if initial is Sex.UNISEX:

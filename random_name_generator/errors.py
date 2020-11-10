@@ -1,14 +1,17 @@
+"""Custom expection classes module."""
+
+
 class NameGenerationError(Exception):
-    """Raised when we are not able to generate names."""
+    """Base exception that raised when any generation error has occured."""
 
 
 class UnsupportedSexError(NameGenerationError):
-    pass
+    """Raises when sex is not supported for given descent."""
 
 
 class UnsupportedDescentError(NameGenerationError):
-    pass
+    """Raises when given descent is not presented in first/last names list."""
 
 
 class LimitExceedError(NameGenerationError):
-    pass
+    """Raised when user asked for more random names than it is possible."""
