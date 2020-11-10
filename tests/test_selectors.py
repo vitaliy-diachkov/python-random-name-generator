@@ -52,9 +52,22 @@ class TestLastNameSelector:
         last_names = get_last_names(descent, sex)
         assert last_names == expected
 
-    def test_get_last_names_unsopported_sex(self, mock_last_names):
+    @pytest.mark.parametrize(
+        'descent,sex',
+        [
+            (Descent.RUSSIAN, None),
+            (Descent.RUSSIAN, Sex.UNISEX),
+            (Descent.FRENCH, Sex.MALE),
+        ]
+    )
+    def test_get_last_names_unsopported_sex(
+        self,
+        descent,
+        sex,
+        mock_last_names
+    ):
         with pytest.raises(NameGenerationError):
-            get_last_names(Descent.RUSSIAN)
+            get_last_names(descent, sex)
 
 
 @pytest.mark.parametrize(
