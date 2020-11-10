@@ -1,7 +1,10 @@
 import pytest
 
 from random_name_generator import Descent, Sex
-from random_name_generator.errors import NameGenerationError
+from random_name_generator.errors import (
+    UnsupportedDescentError,
+    UnsupportedSexError
+)
 from random_name_generator.selectors import (
     get_first_names,
     get_last_names,
@@ -23,19 +26,20 @@ class TestFirstNameSelector:
         assert first_names == expected
 
     @pytest.mark.parametrize(
-        'descent,sex',
+        'descent,sex,error',
         [
-            (Descent.GERMAN, Sex.MALE),
-            (Descent.FRENCH, Sex.MALE)
+            (Descent.GERMAN, Sex.MALE, UnsupportedSexError),
+            (Descent.FRENCH, Sex.MALE, UnsupportedDescentError)
         ]
     )
     def test_first_names_generating_errors(
-            self,
-            descent,
-            sex,
-            mock_first_names
+        self,
+        descent,
+        sex,
+        error,
+        mock_first_names
     ):
-        with pytest.raises(NameGenerationError):
+        with pytest.raises(error):
             get_first_names(descent, sex)
 
 
@@ -53,20 +57,21 @@ class TestLastNameSelector:
         assert last_names == expected
 
     @pytest.mark.parametrize(
-        'descent,sex',
+        'descent,sex,error',
         [
-            (Descent.RUSSIAN, None),
-            (Descent.RUSSIAN, Sex.UNISEX),
-            (Descent.FRENCH, Sex.MALE),
+            (Descent.RUSSIAN, None, UnsupportedSexError),
+            (Descent.RUSSIAN, Sex.UNISEX, UnsupportedSexError),
+            (Descent.FRENCH, Sex.MALE, UnsupportedDescentError),
         ]
     )
     def test_get_last_names_unsopported_sex(
         self,
         descent,
         sex,
+        error,
         mock_last_names
     ):
-        with pytest.raises(NameGenerationError):
+        with pytest.raises(error):
             get_last_names(descent, sex)
 
 

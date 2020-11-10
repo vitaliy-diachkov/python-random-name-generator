@@ -1,7 +1,7 @@
 from itertools import chain
 from typing import Optional
 
-from .errors import NameGenerationError
+from .errors import UnsupportedDescentError, UnsupportedSexError
 from .constants import Descent, Sex, FIRST_NAMES, LAST_NAMES
 
 
@@ -12,7 +12,7 @@ def get_first_names(
     names_by_descent = FIRST_NAMES.get(descent)
 
     if not names_by_descent:
-        raise NameGenerationError(
+        raise UnsupportedDescentError(
             f'We do not support {descent} descent at this moment'
         )
 
@@ -23,7 +23,7 @@ def get_first_names(
     ))
 
     if not random_first_names:
-        raise NameGenerationError(
+        raise UnsupportedSexError(
             f'We can not generate {sex} {descent} names at this moment'
         )
 
@@ -38,20 +38,20 @@ def get_last_names(
 
     if isinstance(last_names, dict):
         if sex is None:
-            raise NameGenerationError(
+            raise UnsupportedSexError(
                 'You need to explicitly set sex to get list of last names for '
                 f'{descent} descent'
             )
 
         if sex not in [Sex.MALE, Sex.FEMALE]:
-            raise NameGenerationError(
+            raise UnsupportedSexError(
                 f'{sex} is not supported for {descent} descent.'
             )
 
         last_names = last_names.get(sex)
 
     if not last_names:
-        raise NameGenerationError(
+        raise UnsupportedDescentError(
             f'We can not get {sex} {descent} last names.'
         )
 

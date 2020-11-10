@@ -1,7 +1,7 @@
 import pytest
 
 from random_name_generator import generate, generate_one, Descent, Sex
-from random_name_generator.errors import NameGenerationError
+from random_name_generator.errors import LimitExceedError
 
 
 @pytest.fixture
@@ -33,7 +33,7 @@ class TestRandomNameGeneration:
         assert not any(names.count(name) > 1 for name in names)
 
     def test_generate_names_too_big_limit(self):
-        with pytest.raises(NameGenerationError):
+        with pytest.raises(LimitExceedError):
             generate(Descent.ENGLISH, Sex.MALE, limit=999)
 
     def test_generate_name_with_different_descents(self):

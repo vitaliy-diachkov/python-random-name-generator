@@ -2,7 +2,7 @@ import random
 from typing import Union
 
 from .constants import Descent, Sex
-from .errors import NameGenerationError
+from .errors import LimitExceedError
 from .selectors import get_first_names, get_last_names
 
 
@@ -26,7 +26,7 @@ def generate(
     max_random_names = min(len(first_names), len(last_names))
 
     if max_random_names < limit:
-        raise NameGenerationError(
+        raise LimitExceedError(
             f'We can not generate {limit} {sex} {first_name_descent}/'
             f'{last_name_descent} names (max. possible count: '
             f'{max_random_names}).'
