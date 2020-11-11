@@ -31,4 +31,6 @@ rng.generate_one(
 
 ### CLI
 
-*TDB*
+```bash
+generate-random-names --descent Italian/English --sex unisex --limit 1
+```
