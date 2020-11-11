@@ -33,6 +33,14 @@ def mock_first_names(monkeypatch):
         Descent.FRENCH: {},
         Descent.GERMAN: {
             Sex.MALE: []
+        },
+        Descent.RUSSIAN: {
+            Sex.MALE: [
+                'Viktor'
+            ],
+            Sex.FEMALE: [
+                'Iryna'
+            ],
         }
     }
 
@@ -78,7 +86,5 @@ def mock_last_names(monkeypatch):
         'random_name_generator.constants.LAST_NAMES',
         last_names
     )
-
-
 
     return last_names

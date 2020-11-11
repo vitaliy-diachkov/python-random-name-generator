@@ -48,11 +48,7 @@ def generate(
     max_random_names = min(len(first_names), len(last_names))
 
     if max_random_names < limit:
-        raise LimitExceedError(
-            f'We can not generate {limit} {sex} {first_name_descent}/'
-            f'{last_name_descent} names (max. possible count: '
-            f'{max_random_names}).'
-        )
+        raise LimitExceedError(descent, sex, max_random_names)
 
     random.shuffle(first_names)
     random.shuffle(last_names)

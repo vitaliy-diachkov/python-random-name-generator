@@ -4,16 +4,6 @@ from random_name_generator import generate, generate_one, Descent, Sex
 from random_name_generator.errors import LimitExceedError
 
 
-@pytest.fixture
-def mock_random_shuffle(monkeypatch):
-    def shuffle(*args, **kwargs):
-        pass
-
-    monkeypatch.setattr('random.shuffle', shuffle)
-
-    return shuffle
-
-
 @pytest.mark.usefixtures(
     'mock_random_shuffle',
     'mock_first_names',
