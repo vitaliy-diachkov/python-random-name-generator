@@ -4,14 +4,14 @@ Random name generators module.
 Generators are functions that generates random names.
 """
 import random
-from typing import List, Union
+from typing import List, Union, Tuple
 
 from .constants import Descent, Sex
 from .errors import LimitExceedError
 from .selectors import get_first_names, get_last_names
 
 
-DescentPair = tuple[Descent, Descent]
+DescentPair = Tuple[Descent, Descent]
 
 
 def generate(

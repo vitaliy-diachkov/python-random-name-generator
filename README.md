@@ -22,9 +22,9 @@ rng.generate(descent=rng.Descent.ENGLISH, sex=rng.Sex.MALE, limit=2)
 # Generate 1 italian female name
 rng.generate_one(rng.Descent.ITALIAN, sex=rng.Sex.FEMALE)
 
-# Generate 1 male name with english first name and italian last name.
+# generate male name with italian first name and english last name
 rng.generate_one(
-    descent=(rng.Descent.ENGLISH, rng.Descent.ITALIAN),
+    descent=(rng.Descent.ITALIAN, rng.Descent.ENGLISH),
     sex=rng.Sex.MALE
 )
 ```
